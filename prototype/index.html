@@ -49,6 +49,14 @@
               <div class="kv__k">Eligibility Status</div>
               <div class="kv__v" id="eligibilityStatus">Eligible</div>
             </div>
+            <div class="kv__row">
+              <div class="kv__k">Anti-Spoof Status</div>
+              <div class="kv__v" id="antiSpoofStatus">Trusted</div>
+            </div>
+            <div class="kv__row">
+              <div class="kv__k">Risk Level</div>
+              <div class="kv__v" id="antiSpoofRisk">Low</div>
+            </div>
           </div>
         </section>
 
@@ -67,6 +75,10 @@
             <div class="result__row">
               <div class="result__label">Payout amount</div>
               <div class="result__value result__value--big" id="payoutAmount"></div>
+            </div>
+            <div class="result__row">
+              <div class="result__label">Anti-spoof handling</div>
+              <div class="result__value" id="antiSpoofHandling"></div>
             </div>
           </div>
         </section>
@@ -88,6 +100,37 @@
           <div class="chip">
             <div class="chip__k">Activity</div>
             <div class="chip__v" id="tActivity">Active Today</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="card__title">Adversarial Defense & Anti-Spoofing</h2>
+        <p class="muted">A quick check to reduce fake location claims. The goal is fairness, not instant rejection.</p>
+        <div class="transparency">
+          <div class="chip">
+            <div class="chip__k">App activity time</div>
+            <div class="chip__v" id="tAppActivityTime">3h 30m</div>
+          </div>
+          <div class="chip">
+            <div class="chip__k">Orders / deliveries</div>
+            <div class="chip__v" id="tOrdersCount">12</div>
+          </div>
+          <div class="chip">
+            <div class="chip__k">Movement consistency</div>
+            <div class="chip__v" id="tMovementConsistency">Consistent</div>
+          </div>
+          <div class="chip">
+            <div class="chip__k">Weather vs activity</div>
+            <div class="chip__v" id="tWeatherActivityMismatch">Match</div>
+          </div>
+          <div class="chip">
+            <div class="chip__k">Repeated area claims</div>
+            <div class="chip__v" id="tRepeatedClaims">Normal</div>
+          </div>
+          <div class="chip">
+            <div class="chip__k">Anti-spoof result</div>
+            <div class="chip__v" id="tAntiSpoofOutcome">Trusted</div>
           </div>
         </div>
       </section>
