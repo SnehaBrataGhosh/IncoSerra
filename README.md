@@ -55,7 +55,7 @@ In simple terms:
 
 When the combination points to low earning potential and the worker is active, the system triggers a small payout.
 
-## Adversarial Defense & Anti-Spoofing Strategy
+## Adversarial Defense & Anti-Spoofing Strategy (this was the change that was made according to "URGENT: 24-HOUR DEADLINE MARKET SHIFT")
 
 This part of the system is meant to reduce fake claims and location spoofing, without making life harder for genuine workers.
 
@@ -67,7 +67,7 @@ The system tries to tell a real worker from someone faking location by looking a
 - Check consistency of movement: real movement usually looks continuous and believable over time, while spoofed location often jumps or repeats patterns.
 - Look for mismatch: if the worker looks active in the app but the location signals don’t line up (or vice versa), that’s a red flag.
 
-### 2. Data Points Used (beyond GPS)
+### 2. Data Points Used (here it is not only GPS but beyond GPS)
 
 Beyond GPS location, the system can use simple signals that are harder to fake all at once:
 
