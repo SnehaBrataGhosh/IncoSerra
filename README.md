@@ -2,6 +2,8 @@
 
 Stabilizing gig income, one day at a time.
 
+Updates made according to the URGENT: 24-HOUR DEADLINE MARKET SHIFT.
+
 ## Overview
 
 IncoSerra is a simple prototype that explores how small, on-time payouts could help gig workers when a day starts going wrong because of things like weather or low demand.
@@ -52,6 +54,39 @@ In simple terms:
 - Activity checks whether the worker was actually working/available that day
 
 When the combination points to low earning potential and the worker is active, the system triggers a small payout.
+
+## Adversarial Defense & Anti-Spoofing Strategy
+
+This part of the system is meant to reduce fake claims and location spoofing, without making life harder for genuine workers.
+
+### 1. Differentiation
+
+The system tries to tell a real worker from someone faking location by looking at behavior and consistency, not just GPS.
+
+- Cross-check activity: use things like hours worked and recent task/activity signals to see if the day matches the location claim.
+- Check consistency of movement: real movement usually looks continuous and believable over time, while spoofed location often jumps or repeats patterns.
+- Look for mismatch: if the worker looks active in the app but the location signals don’t line up (or vice versa), that’s a red flag.
+
+### 2. Data Points Used (beyond GPS)
+
+Beyond GPS location, the system can use simple signals that are harder to fake all at once:
+
+- App activity time (when the app was actively used)
+- Number of deliveries/orders completed or started
+- Movement patterns (travel looks continuous; it is not only “teleporting” between places)
+- Weather vs activity mismatch (for example, heavy-rain days where activity patterns don’t match what you’d expect)
+- Repeated claims from the same area/group (unusual repeat patterns can indicate coordinated fraud)
+
+When these signals are combined, it’s much harder for someone to spoof only one thing and still pass the checks.
+
+### 3. UX Balance
+
+If something looks suspicious, the goal is not instant rejection. The system should protect real workers while still preventing abuse:
+
+- Temporary flag instead of rejection: keep payouts paused or limited only while the check runs.
+- Reduced payout or delayed verification: if the system is unsure, it can hold back part of the payout until signals improve.
+- Manual review or a quick re-check: review the specific case using the same signals, then decide.
+- Benefit of doubt for consistent workers: if a worker’s history has been stable and the recent signals are only slightly off, treat them more gently.
 
 ## Tech Stack(this is only for phase 1 we will enhance more) 
 
