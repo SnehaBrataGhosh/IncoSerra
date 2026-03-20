@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IncoSerra</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <!-- Landing Section -->
+      <section class="hero card">
+        <div class="hero__top">
+          <h1 class="hero__title">IncoSerra</h1>
+          <p class="hero__tagline">Stabilizing Gig Income, One Day at a Time</p>
+        </div>
+        <p class="hero__desc">
+          A simple prototype that simulates small payouts when external conditions (like weather and low demand)
+          make gig work harder for the day.
+        </p>
+      </section>
+
+      <!-- Dashboard Section -->
+      <section class="grid">
+        <section class="card">
+          <h2 class="card__title">Dashboard</h2>
+          <div class="kv">
+            <div class="kv__row">
+              <div class="kv__k">Worker Name</div>
+              <div class="kv__v" id="workerName">Saideep Kumar</div>
+            </div>
+            <div class="kv__row">
+              <div class="kv__k">Status</div>
+              <div class="kv__v" id="workerStatus">Active</div>
+            </div>
+            <div class="kv__row">
+              <div class="kv__k">Hours Worked</div>
+              <div class="kv__v" id="hoursWorked">6.5</div>
+            </div>
+            <div class="kv__row">
+              <div class="kv__k">Weather Condition</div>
+              <div class="kv__v" id="weatherCondition">Heavy Rain</div>
+            </div>
+            <div class="kv__row">
+              <div class="kv__k">Demand Level</div>
+              <div class="kv__v" id="demandLevel">Low</div>
+            </div>
+            <div class="kv__row">
+              <div class="kv__k">Eligibility Status</div>
+              <div class="kv__v" id="eligibilityStatus">Eligible</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="card__title">Payout Simulation</h2>
+          <p class="muted">See a sample result based on the conditions shown in the dashboard.</p>
+          <button class="btn" type="button" id="checkPayoutBtn" aria-controls="payoutResult">
+            Check Payout
+          </button>
+
+          <div class="result" id="payoutResult" hidden>
+            <div class="result__row">
+              <div class="result__label">Reason</div>
+              <div class="result__value" id="payoutReason"></div>
+            </div>
+            <div class="result__row">
+              <div class="result__label">Payout amount</div>
+              <div class="result__value result__value--big" id="payoutAmount"></div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+
+      <section class="card">
+        <h2 class="card__title">Transparency</h2>
+        <p class="muted">The decision uses three factors: weather, demand, and activity.</p>
+        <div class="transparency">
+          <div class="chip">
+            <div class="chip__k">Weather</div>
+            <div class="chip__v" id="tWeather">Heavy Rain</div>
+          </div>
+          <div class="chip">
+            <div class="chip__k">Demand</div>
+            <div class="chip__v" id="tDemand">Low</div>
+          </div>
+          <div class="chip">
+            <div class="chip__k">Activity</div>
+            <div class="chip__v" id="tActivity">Active Today</div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer muted">
+        This is just a prototype UI . No dynamic variables only hard coding, no account details, and no live decisioning.
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
