@@ -45,7 +45,7 @@ export default function Register() {
       <main className="mx-auto max-w-lg px-4 py-12">
         <h1 className="text-2xl font-semibold text-slate-900">Create your IncoSerra account</h1>
         <p className="mt-2 text-sm text-slate-600">
-          Use any valid 12-digit mock Aadhaar. Example-style names: NIHARIKA or PADMINI.
+          Use any valid 12-digit mock Aadhaar. Example-style names: RAJU RASTOFI or AJEY NAGAR.
         </p>
         <form onSubmit={onSubmit} className="mt-8 space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           {error ? <p className="text-sm text-red-600">{error}</p> : null}
