@@ -1,111 +1,118 @@
-# IncoSerra(the name of the webapp and the platform)
+# IncoSerra
 
-Stabilizing gig income, one day at a time.
+Production-style web app for stabilizing gig income: **React (Vite) + Tailwind** frontend, **Express** API, **MySQL** data, and **session + bcrypt** authentication (no JWT).
 
-Updates made according to the URGENT: 24-HOUR DEADLINE MARKET SHIFT.
+The runnable application lives in **`beta/`**:
 
-## Overview
+- `beta/client` — React UI  
+- `beta/server` — Express API  
+- `beta/database` — SQL schema  
 
-IncoSerra is a simple prototype that explores how small, on-time payouts could help gig workers when a day starts going wrong because of things like weather or low demand.
+Legacy static prototype files remain in `prototype/` and are not required to run the beta stack.
 
-## Problem
+---
 
-Gig work can be unpredictable. On some days, earnings drop quickly, and there isn’t always enough cushion to cover rent, food, and travel.
+## Prerequisites
 
-We see recurring issues like:
+- Node.js 18+ (global `fetch` on the server)  
+- MySQL 8+ (or compatible)  
+- Optional: [OpenWeatherMap](https://openweathermap.org/api) API key for live weather in the claim pipeline  
 
-- Unpredictable daily earnings
-- Low savings to handle short-term drops
-- High living costs in cities
-- No quick system to respond when conditions worsen for the day
+---
 
-Even a couple of tough days can make regular expenses harder to manage.
+## 1. Database
 
-## Our Vision and Our Demo video
-YouTube link :- https://youtu.be/9ho5SO3qdrM?si=7hwlHFDmW4cGoZFw
+Create the schema:
 
-The idea is to move towards a system that can provide basic financial stability for gig workers during uncertain conditions.
+```bash
+mysql -u root -p < beta/database/schema.sql
+```
 
-## Research
+---
 
-Across reports and industry updates, a common picture keeps showing up:
+## 2. Server environment
 
-- Many workers earn around ₹20,000–₹30,000 per month (varies by city and platform)
-- Savings are often very low
-- Work hours can be long (commonly around 10–12 hours a day)
-- Earnings can swing a lot from day to day
+```bash
+cd beta/server
+cp .env.example .env
+```
 
-That’s why even small disruptions can have an outsized impact.
+Edit **`.env`** (do not commit real secrets):
 
-## Our Idea and Motive
+| Variable | Purpose |
+|----------|---------|
+| `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` | MySQL connection |
+| `PORT` | API port (default `4000`) |
+| `SESSION_SECRET` | Long random string for signed cookies |
+| `OPENWEATHER_API_KEY` | Optional; without it, weather falls back to a safe placeholder |
+| `OPENWEATHER_DEFAULT_CITY` | Default city when the client omits one |
+| `CLIENT_ORIGIN` | Frontend origin for CORS (default `http://localhost:5173`) |
 
-IncoSerra focuses on the situation a worker faces that day and decides whether a small payout could reduce the impact of a sudden income drop.
+Install and run:
 
-The goal isn’t to replace income. It’s to take the edge off the days that hit hardest, so workers can keep going.
+```bash
+npm install
+npm run dev
+```
 
-## Core Logic
+Optional demo accounts (Silver plan, same password):
 
-weather + demand + activity → payout
+```bash
+npm run seed
+```
 
-In simple terms:
+Uses **`SEED_DEMO_PASSWORD`** from `.env` if set; otherwise **`IncoSerraDemo2026`**. Demo identities: **NIHARIKA** and **PADMINI** only.
 
-- Weather captures external disruptions (for example, heavy rain)
-- Demand reflects how likely orders are during that period
-- Activity checks whether the worker was actually working/available that day
+---
 
-When the combination points to low earning potential and the worker is active, the system triggers a small payout.
+## 3. Client
 
-## Adversarial Defense & Anti-Spoofing Strategy (this was the change that was made according to "URGENT: 24-HOUR DEADLINE MARKET SHIFT")
+```bash
+cd beta/client
+npm install
+npm run dev
+```
 
-This part of the system is meant to reduce fake claims and location spoofing, without making life harder for genuine workers.
+Open `http://localhost:5173`. The dev server proxies `/api` to `http://localhost:4000`.
 
-### 1. Differentiation
+For production builds, set `VITE_API_URL` to your API origin (e.g. `https://api.example.com`) so the browser calls the correct host.
 
-The system tries to tell a real worker from someone faking location by looking at behavior and consistency, not just GPS.
+---
 
-- Cross-check activity: use things like hours worked and recent task/activity signals to see if the day matches the location claim.
-- Check consistency of movement: real movement usually looks continuous and believable over time, while spoofed location often jumps or repeats patterns.
-- Look for mismatch: if the worker looks active in the app but the location signals don’t line up (or vice versa), that’s a red flag.
+## API routes
 
-### 2. Data Points Used (here it is not only GPS but beyond GPS)
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/api/auth/register` | Register (name, phone, 12-digit aadhaar, domain, password) |
+| POST | `/api/auth/login` | Login (name + password), session cookie |
+| POST | `/api/auth/logout` | Destroy session |
+| GET | `/api/user` | Profile, totals, deposit and claim history |
+| PATCH | `/api/user/plan` | Set or change plan (max **5** plan **changes** after first plan) |
+| POST | `/api/deposit` | Simulated deposit within plan limits (max **3** deposits per week) |
+| POST | `/api/process` | Run payout / fraud pipeline |
+| POST | `/api/claim` | Same body as `/api/process` (alias) |
+| GET | `/api/claim/:id` | Fetch one claim |
 
-Beyond GPS location, the system can use simple signals that are harder to fake all at once:
+---
 
-- App activity time (when the app was actively used)
-- Number of deliveries/orders completed or started
-- Movement patterns (travel looks continuous; it is not only “teleporting” between places)
-- Weather vs activity mismatch (for example, heavy-rain days where activity patterns don’t match what you’d expect)
-- Repeated claims from the same area/group (unusual repeat patterns can indicate coordinated fraud)
+## Plans and rules (demo)
 
-When these signals are combined, it’s much harder for someone to spoof only one thing and still pass the checks.
+| Plan | Deposit range (INR) | Weekly deposit cap |
+|------|---------------------|--------------------|
+| Silver | 20 – 60 | 3 |
+| Gold | 40 – 120 | 3 |
+| Platinum | 50 – 150 | 3 |
 
-### 3. UX Balance
+Claim processing uses weather (when configured), activity level, simulated demand, movement, and recent claim patterns to produce **risk score**, **status** (`approved` / `review` / `rejected`), and **payout amount**.
 
-If something looks suspicious, the goal is not instant rejection. The system should protect real workers while still preventing abuse:
+---
 
-- Temporary flag instead of rejection: keep payouts paused or limited only while the check runs.
-- Reduced payout or delayed verification: if the system is unsure, it can hold back part of the payout until signals improve.
-- Manual review or a quick re-check: review the specific case using the same signals, then decide.
-- Benefit of doubt for consistent workers: if a worker’s history has been stable and the recent signals are only slightly off, treat them more gently.
+## Naming convention for demos
 
-## Tech Stack(this is only for phase 1 we will enhance more) 
+Sample or placeholder identities use **NIHARIKA** and **PADMINI** only—no generic “Admin”, “User”, or “Cursor” labels in demo data or UI copy tied to this project.
 
-- HTML
-- CSS
-- JavaScript
+---
 
-## Planned Integrations(But it could be more)
+## Repository
 
-- Weather API (real-time conditions)
-- Location data (to apply local conditions)
-- Demand estimation (based on time and area patterns)
-
-## References(we used for research purpose)
-
-- https://www.livemint.com/
-- https://trak.in/
-- https://www.business-standard.com/
-- https://www.outlookbusiness.com/
-- https://www.ilo.org/
-
-
+Remote: `https://github.com/SnehaBrataGhosh/IncoSerra.git`
