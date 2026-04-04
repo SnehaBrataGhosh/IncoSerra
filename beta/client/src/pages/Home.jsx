@@ -68,7 +68,7 @@ export default function Home() {
             )}
           </div>
           <p className="mt-6 text-sm text-slate-500">
-            Demo accounts (after seeding): NIHARIKA and PADMINI share the documented demo password.
+            Demo accounts shares the documented demo password.
           </p>
         </section>
 
