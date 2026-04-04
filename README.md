@@ -105,11 +105,8 @@ For production builds, set `VITE_API_URL` to your API origin (e.g. `https://api.
 
 Claim processing uses weather (when configured), activity level, simulated demand, movement, and recent claim patterns to produce **risk score**, **status** (`approved` / `review` / `rejected`), and **payout amount**.
 
----
 
-## Naming convention for demos
 
-Sample or placeholder identities use **NIHARIKA** and **PADMINI** only—no generic “Admin”, “User”, or “Cursor” labels in demo data or UI copy tied to this project.
 
 ---
 
