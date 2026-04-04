@@ -1,6 +1,8 @@
 # IncoSerra
 
 Production-style web app for stabilizing gig income: **React (Vite) + Tailwind** frontend, **Express** API, **MySQL** data, and **session + bcrypt** authentication (no JWT).
+Demonstration of beta phase of IncoSerra:
+`https://youtu.be/t_kcq--mj54?si=hoO3rIZEk7lCgqtw`
 
 The runnable application lives in **`beta/`**:
 
@@ -61,7 +63,7 @@ Optional demo accounts (Silver plan, same password):
 npm run seed
 ```
 
-Uses **`SEED_DEMO_PASSWORD`** from `.env` if set; otherwise **`IncoSerraDemo2026`**. Demo identities: **NIHARIKA** and **PADMINI** only.
+Uses **`SEED_DEMO_PASSWORD`** from `.env` if set; otherwise **`IncoSerraDemo2026`**. Demo identities: **RAJU RASTOGI** and **AJEY NAGAR** only.
 
 ---
 
@@ -105,7 +107,15 @@ For production builds, set `VITE_API_URL` to your API origin (e.g. `https://api.
 
 Claim processing uses weather (when configured), activity level, simulated demand, movement, and recent claim patterns to produce **risk score**, **status** (`approved` / `review` / `rejected`), and **payout amount**.
 
+---
 
+## Important Links
+
+Introduction and demo YouTube link (also avilable in README.md):
+`https://youtu.be/9ho5SO3qdrM?si=7hwlHFDmW4cGoZFw`
+
+Demonstration of beta phase of IncoSerra:
+`https://youtu.be/t_kcq--mj54?si=hoO3rIZEk7lCgqtw`
 
 
 ---
