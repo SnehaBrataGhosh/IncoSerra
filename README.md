@@ -123,4 +123,3 @@ Demonstration of beta phase of IncoSerra:
 ## Repository
 
 Remote: `https://github.com/SnehaBrataGhosh/IncoSerra.git`
-
